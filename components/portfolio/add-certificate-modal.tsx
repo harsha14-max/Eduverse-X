@@ -18,12 +18,44 @@ import {
   RefreshCw,
   Award,
   Sparkles,
+  TrendingUp,
+  CheckCircle2,
+  Info,
 } from "lucide-react"
+import { Badge } from "@/components/ui/badge"
+import { ScrollArea } from "@/components/ui/scroll-area"
 
 interface AddCertificateModalProps {
   open: boolean
   onOpenChange: (open: boolean) => void
 }
+
+const aiRecommendations = [
+  {
+    id: "1",
+    certificate: "Machine Learning Specialization",
+    organization: "Coursera",
+    reason: "High demand skill that complements your Python expertise",
+    impact: "High",
+    match: "92%",
+  },
+  {
+    id: "2",
+    certificate: "AWS Solutions Architect",
+    organization: "AWS",
+    reason: "Aligns with your cloud infrastructure learning goals",
+    impact: "Medium",
+    match: "85%",
+  },
+  {
+    id: "3",
+    certificate: "React Complete Guide",
+    organization: "Udemy",
+    reason: "Builds on your frontend development skills",
+    impact: "Medium",
+    match: "88%",
+  },
+]
 
 export function AddCertificateModal({ open, onOpenChange }: AddCertificateModalProps) {
   const [certificate, setCertificate] = useState({
@@ -35,6 +67,7 @@ export function AddCertificateModal({ open, onOpenChange }: AddCertificateModalP
   })
   const [isSyncing, setIsSyncing] = useState(false)
   const [isUploading, setIsUploading] = useState(false)
+  const [showAIRecommendations, setShowAIRecommendations] = useState(true)
 
   const handleSyncFromPlatform = (platform: string) => {
     setIsSyncing(true)
@@ -88,6 +121,81 @@ export function AddCertificateModal({ open, onOpenChange }: AddCertificateModalP
             Add a certificate manually or sync from connected platforms
           </DialogDescription>
         </DialogHeader>
+
+        {/* AI Recommendations */}
+        {showAIRecommendations && (
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mt-4 p-4 rounded-lg bg-primary/5 border border-primary/20"
+          >
+            <div className="flex items-start justify-between mb-3">
+              <div className="flex items-center gap-2">
+                <Sparkles className="h-5 w-5 text-primary" />
+                <div className="text-sm font-semibold">AI Certificate Recommendations</div>
+                <Badge variant="outline" className="text-xs">For You</Badge>
+              </div>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-6 w-6"
+                onClick={() => setShowAIRecommendations(false)}
+              >
+                ×
+              </Button>
+            </div>
+            <ScrollArea className="max-h-48">
+              <div className="space-y-3">
+                {aiRecommendations.map((rec, index) => (
+                  <motion.div
+                    key={rec.id}
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: index * 0.1 }}
+                    className="p-3 rounded-lg border border-border bg-background cursor-pointer hover:border-primary/50 transition-colors"
+                    onClick={() => {
+                      setCertificate({
+                        organization: rec.organization,
+                        courseName: rec.certificate,
+                        date: new Date().toISOString().split("T")[0],
+                        category: "Technical",
+                        source: "AI Recommended",
+                      })
+                      setShowAIRecommendations(false)
+                    }}
+                  >
+                    <div className="flex items-start justify-between gap-2 mb-2">
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2 mb-1">
+                          <Award className="h-4 w-4 text-primary" />
+                          <div className="text-sm font-medium">{rec.certificate}</div>
+                          <Badge
+                            variant="outline"
+                            className={`text-xs ${
+                              rec.impact === "High" ? "bg-green-50 text-green-700 border-green-300" :
+                              "bg-yellow-50 text-yellow-700 border-yellow-300"
+                            }`}
+                          >
+                            {rec.impact} Impact
+                          </Badge>
+                        </div>
+                        <div className="text-xs text-muted-foreground mb-2">{rec.organization}</div>
+                        <div className="text-xs text-muted-foreground flex items-start gap-2">
+                          <Info className="h-3 w-3 mt-0.5 text-primary shrink-0" />
+                          <span>{rec.reason}</span>
+                        </div>
+                      </div>
+                      <Badge variant="outline" className="text-xs gap-1">
+                        <CheckCircle2 className="h-3 w-3 text-green-600" />
+                        {rec.match} Match
+                      </Badge>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </ScrollArea>
+          </motion.div>
+        )}
 
         <Tabs defaultValue="manual" className="mt-4">
           <TabsList className="grid w-full grid-cols-3">

@@ -18,6 +18,7 @@ import { AICollaborationSuggestions } from "./ai-collaboration-suggestions"
 import { ReputationScoreOverlay } from "./reputation-score-overlay"
 import { GrowthInsightsColumn } from "./growth-insights-column"
 import { ScrollArea } from "@/components/ui/scroll-area"
+import { VisualRolesEnhancement } from "../collaboration/visual-roles-enhancement"
 
 const teamMembers = [
   {

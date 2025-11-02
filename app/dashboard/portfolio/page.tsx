@@ -2,7 +2,7 @@
 
 import { useEffect } from "react"
 import { useRouter } from "next/navigation"
-import { PortfolioPage } from "@/components/portfolio/portfolio-page"
+import PortfolioPage from "@/components/portfolio/portfolio-page"
 import { isAuthenticated } from "@/lib/auth"
 
 export default function Portfolio() {

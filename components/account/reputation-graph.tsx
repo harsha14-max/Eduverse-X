@@ -157,13 +157,29 @@ const nodeTypes: NodeTypes = {
 export function ReputationGraph({ isExpanded }: ReputationGraphProps) {
   const [nodes, setNodes] = useState(initialNodes)
   const [edges, setEdges] = useState(initialEdges)
+  const [selectedNode, setSelectedNode] = useState<string | null>(null)
+
+  const onNodeClick = useCallback((_event: any, node: Node) => {
+    setSelectedNode(node.id)
+  }, [])
 
   return (
-    <div className="w-full h-full min-h-[400px]">
+    <div className="w-full h-full min-h-[400px] relative">
+      {/* SVG Gradient Definition - Must be outside ReactFlow */}
+      <svg width="0" height="0" className="absolute">
+        <defs>
+          <linearGradient id="gradient-reputation" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#8b5cf6" stopOpacity={0.8} />
+            <stop offset="50%" stopColor="#6366f1" stopOpacity={0.9} />
+            <stop offset="100%" stopColor="#3b82f6" stopOpacity={0.8} />
+          </linearGradient>
+        </defs>
+      </svg>
       <ReactFlow
         nodes={nodes}
         edges={edges}
         nodeTypes={nodeTypes}
+        onNodeClick={onNodeClick}
         fitView
         snapToGrid
         snapGrid={[20, 20]}
@@ -172,6 +188,10 @@ export function ReputationGraph({ isExpanded }: ReputationGraphProps) {
           type: "smoothstep",
           animated: true,
           markerEnd: { type: MarkerType.ArrowClosed },
+          style: {
+            stroke: "url(#gradient-reputation)",
+            strokeWidth: 2,
+          },
         }}
         className="bg-background"
       >

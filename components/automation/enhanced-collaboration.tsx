@@ -27,6 +27,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
+import { AIThreadSummaries } from "../collaboration/ai-thread-summaries"
 
 interface Comment {
   id: string
@@ -286,6 +287,19 @@ export function EnhancedCollaboration({ nodeId }: { nodeId?: string }) {
               ))}
             </div>
           </ScrollArea>
+
+          {/* AI Thread Summaries */}
+          <div className="mt-3 pt-3 border-t border-border">
+            <AIThreadSummaries
+              threadId={nodeId || "current-thread"}
+              messages={comments.map((c) => ({
+                id: c.id,
+                user: c.author,
+                content: c.content,
+                timestamp: c.timestamp,
+              }))}
+            />
+          </div>
 
           {/* Add Comment */}
           <div className="mt-3 flex gap-2">

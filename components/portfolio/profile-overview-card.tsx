@@ -17,6 +17,9 @@ import {
   GraduationCap,
   Briefcase,
   CheckCircle2,
+  Image,
+  Camera,
+  Upload,
 } from "lucide-react"
 import {
   Dialog,
@@ -126,6 +129,59 @@ export function ProfileOverviewCard() {
                   <DialogDescription>Update your profile information</DialogDescription>
                 </DialogHeader>
                 <div className="space-y-4 mt-4">
+                  {/* Profile Image Upload */}
+                  <div>
+                    <Label>Profile Image</Label>
+                    <div className="mt-2 space-y-3">
+                      <div className="flex items-center gap-4">
+                        <Avatar className="h-16 w-16 border-2 border-primary">
+                          <AvatarImage src="/api/placeholder/64/64" alt={profile.name} />
+                          <AvatarFallback className="text-lg bg-primary text-primary-foreground">
+                            {profile.name.split(" ").map((n) => n[0]).join("")}
+                          </AvatarFallback>
+                        </Avatar>
+                        <div className="flex-1 space-y-2">
+                          <label htmlFor="profile-upload">
+                            <Button variant="outline" size="sm" asChild className="gap-2">
+                              <span>
+                                <Upload className="h-4 w-4" />
+                                Upload Photo
+                              </span>
+                            </Button>
+                            <input
+                              id="profile-upload"
+                              type="file"
+                              accept="image/*"
+                              className="hidden"
+                              onChange={(e) => {
+                                // In production, handle file upload
+                                const file = e.target.files?.[0]
+                                if (file) {
+                                  console.log("Uploading:", file.name)
+                                }
+                              }}
+                            />
+                          </label>
+                        </div>
+                      </div>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="gap-2 text-xs"
+                        onClick={() => {
+                          // Simulate AI-enhanced photo
+                          console.log("AI enhancing photo...")
+                        }}
+                      >
+                        <Sparkles className="h-3 w-3" />
+                        AI-Enhance Photo (Professional Look)
+                      </Button>
+                      <div className="text-xs text-muted-foreground">
+                        AI can enhance your photo for a more professional appearance
+                      </div>
+                    </div>
+                  </div>
+
                   <div>
                     <Label htmlFor="name">Full Name</Label>
                     <Input

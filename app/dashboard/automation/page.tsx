@@ -2,7 +2,7 @@
 
 import { useEffect } from "react"
 import { useRouter } from "next/navigation"
-import { AutomationPage } from "@/components/automation/automation-page"
+import AutomationPage from "@/components/automation/automation-page"
 import { isAuthenticated } from "@/lib/auth"
 
 export default function Automation() {

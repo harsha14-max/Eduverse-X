@@ -19,7 +19,12 @@ import {
   Bell,
   Menu,
   X,
-  User
+  User,
+  Network,
+  Users,
+  Brain,
+  Store,
+  HelpCircle
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
@@ -30,6 +35,13 @@ const navigationItems = [
     label: "Dashboard", 
     icon: LayoutDashboard, 
     href: "/dashboard",
+    badge: null
+  },
+  { 
+    id: "orchestrator", 
+    label: "Orchestrator", 
+    icon: Brain, 
+    href: "/dashboard/orchestrator",
     badge: null
   },
   { 
@@ -55,10 +67,17 @@ const navigationItems = [
   },
   { 
     id: "ai-chat", 
-    label: "AI Mentor", 
+    label: "AI Hub", 
     icon: MessageSquare, 
     href: "/dashboard/ai-chat",
     badge: "3"
+  },
+  { 
+    id: "collaboration", 
+    label: "Collaboration", 
+    icon: Users, 
+    href: "/dashboard/collaboration",
+    badge: null
   },
   { 
     id: "automation", 
@@ -89,10 +108,31 @@ const navigationItems = [
     badge: null
   },
   { 
+    id: "trust", 
+    label: "Trust + Growth", 
+    icon: Network, 
+    href: "/dashboard/trust",
+    badge: null
+  },
+  { 
     id: "account", 
     label: "Account", 
     icon: User, 
     href: "/dashboard/account",
+    badge: null
+  },
+  { 
+    id: "marketplace", 
+    label: "Marketplace", 
+    icon: Store, 
+    href: "/dashboard/marketplace",
+    badge: null
+  },
+  { 
+    id: "support", 
+    label: "Support", 
+    icon: HelpCircle, 
+    href: "/dashboard/support",
     badge: null
   },
 ]
@@ -114,7 +154,7 @@ const bottomItems = [
   },
 ]
 
-export function SidebarNavigation() {
+export default function SidebarNavigation() {
   const [isCollapsed, setIsCollapsed] = useState(false)
   const [isMobileOpen, setIsMobileOpen] = useState(false)
   const pathname = usePathname()

@@ -8,13 +8,13 @@ import { QuickActionCards } from "./quick-action-cards"
 import { DataVaultConsole } from "./data-vault-console"
 import { NotificationPanel } from "./notification-panel"
 import { ProfileBar } from "./profile-bar"
-import { SidebarNavigation } from "./sidebar-navigation"
+import SidebarNavigation from "./sidebar-navigation"
 import { PersonalizedAIFeed } from "./personalized-ai-feed"
 import { SkillProgressTracker } from "./skill-progress-tracker"
 import { TimelineSection } from "./timeline-section"
 import { SecurityTransparencyPanel } from "./security-transparency-panel"
 
-export function DashboardPage() {
+export default function DashboardPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-background via-background to-muted/30 flex">
       {/* Sidebar */}

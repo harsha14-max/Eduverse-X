@@ -2,7 +2,7 @@
 
 import { useEffect } from "react"
 import { useRouter } from "next/navigation"
-import { AnalyticsPage } from "@/components/analytics/analytics-page"
+import AnalyticsPage from "@/components/analytics/analytics-page"
 import { isAuthenticated } from "@/lib/auth"
 
 export default function Analytics() {

@@ -14,7 +14,7 @@ import { AIConversationalPanel } from "./ai-conversational-panel"
 import { EnhancedCollaboration } from "./enhanced-collaboration"
 import { ExecutionVisualizer } from "./execution-visualizer"
 import { UIMicroFeatures } from "./ui-micro-features"
-import { SidebarNavigation } from "../dashboard/sidebar-navigation"
+import SidebarNavigation from "../dashboard/sidebar-navigation"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { ResizablePanel } from "@/components/ui/resizable-panel"
 import { ResizableSection } from "./resizable-section"
@@ -23,7 +23,7 @@ import { SmartSocialSync } from "./smart-social-sync"
 import { LearningAutomationLibrary } from "./learning-automation-library"
 import { AIPerformanceMonitor } from "./ai-performance-monitor"
 
-export function AutomationPage() {
+export default function AutomationPage() {
   const [mounted, setMounted] = useState(false)
   const [leftPanelView, setLeftPanelView] = useState<"sidebar" | "integrations" | "library" | "templates">("sidebar")
   const [rightPanelView, setRightPanelView] = useState<"ai" | "collaboration" | "execution" | "micro">("ai")

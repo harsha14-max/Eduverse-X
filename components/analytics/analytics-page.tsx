@@ -10,10 +10,24 @@ import { SystemTrustPanel } from "./system-trust-panel"
 import { AIInsightCenter } from "./ai-insight-center"
 import { DataPrivacyVisualization } from "./data-privacy-visualization"
 import { DashboardHeader } from "../dashboard/dashboard-header"
-import { SidebarNavigation } from "../dashboard/sidebar-navigation"
+import SidebarNavigation from "../dashboard/sidebar-navigation"
+import { useAutoRefresh } from "@/lib/hooks/useAutoRefresh"
+import { INTERVALS } from "@/lib/timing-constants"
+import { toast } from "sonner"
 
-export function AnalyticsPage() {
+export default function AnalyticsPage() {
   const [mounted, setMounted] = useState(false)
+
+  // Auto-refresh analytics every 5 minutes
+  const { isRefreshing, lastRefresh, refresh } = useAutoRefresh({
+    interval: INTERVALS.ANALYTICS_REFRESH,
+    enabled: true,
+    onRefresh: async () => {
+      // In production, this would fetch fresh analytics data
+      // For now, just log that refresh occurred
+      console.log("Analytics data refreshed")
+    },
+  })
 
   useEffect(() => {
     setMounted(true)

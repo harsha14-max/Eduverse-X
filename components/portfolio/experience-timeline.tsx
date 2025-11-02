@@ -11,6 +11,9 @@ import {
   RefreshCw,
   Sparkles,
   Calendar,
+  Upload,
+  FileText,
+  Linkedin,
 } from "lucide-react"
 import { useRef } from "react"
 
@@ -108,16 +111,40 @@ export function ExperienceTimeline() {
               </CardDescription>
             </div>
           </div>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={handleAutoUpdate}
-            disabled={isUpdating}
-            className="gap-2"
-          >
-            <RefreshCw className={`h-4 w-4 ${isUpdating ? "animate-spin" : ""}`} />
-            Auto Update
-          </Button>
+          <div className="flex items-center gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleAutoUpdate}
+              disabled={isUpdating}
+              className="gap-2"
+            >
+              <Linkedin className={`h-4 w-4 ${isUpdating ? "animate-spin" : ""}`} />
+              Sync LinkedIn
+            </Button>
+            <label htmlFor="cv-upload">
+              <Button variant="outline" size="sm" asChild className="gap-2">
+                <span>
+                  <Upload className="h-4 w-4" />
+                  Upload CV
+                </span>
+              </Button>
+              <input
+                id="cv-upload"
+                type="file"
+                accept=".pdf,.doc,.docx"
+                className="hidden"
+                onChange={(e) => {
+                  const file = e.target.files?.[0]
+                  if (file) {
+                    // Simulate CV parsing
+                    console.log("Uploading CV:", file.name)
+                    // In production, parse CV and extract experience
+                  }
+                }}
+              />
+            </label>
+          </div>
         </div>
       </CardHeader>
 

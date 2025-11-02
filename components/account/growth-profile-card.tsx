@@ -22,14 +22,42 @@ import {
   ResponsiveContainer,
 } from "recharts"
 
-const skillTreeData = [
-  { dimension: "React", value: 85 },
-  { dimension: "TypeScript", value: 78 },
-  { dimension: "Node.js", value: 72 },
-  { dimension: "Python", value: 68 },
-  { dimension: "ML", value: 55 },
-  { dimension: "AWS", value: 45 },
-]
+// Get skill data from Section 7 learning profile (mocked)
+const getLearningProfile = () => {
+  if (typeof window !== "undefined") {
+    try {
+      const profile = localStorage.getItem("learningProfile")
+      if (profile) {
+        return JSON.parse(profile)
+      }
+    } catch (e) {
+      console.error("Error loading learning profile:", e)
+    }
+  }
+  return null
+}
+
+// Generate skill tree data from learning profile or use defaults
+const generateSkillTreeData = () => {
+  const profile = getLearningProfile()
+  if (profile?.skills) {
+    return profile.skills.map((skill: any) => ({
+      dimension: skill.name,
+      value: skill.level || 0,
+    }))
+  }
+  // Default fallback data
+  return [
+    { dimension: "React", value: 85 },
+    { dimension: "TypeScript", value: 78 },
+    { dimension: "Node.js", value: 72 },
+    { dimension: "Python", value: 68 },
+    { dimension: "ML", value: 55 },
+    { dimension: "AWS", value: 45 },
+  ]
+}
+
+const skillTreeData = generateSkillTreeData()
 
 const growthMetrics = [
   { label: "Skills Mastered", value: "12", trend: "+3 this month", icon: Target },

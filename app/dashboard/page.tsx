@@ -2,7 +2,7 @@
 
 import { useEffect } from "react"
 import { useRouter } from "next/navigation"
-import { DashboardPage } from "@/components/dashboard/dashboard-page"
+import DashboardPage from "@/components/dashboard/dashboard-page"
 import { isAuthenticated } from "@/lib/auth"
 
 export default function Dashboard() {

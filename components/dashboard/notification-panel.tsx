@@ -5,6 +5,7 @@ import { useState } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Bell, Sparkles, TrendingUp, AlertCircle, CheckCircle2, Clock } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { VisualSignals } from "../collaboration/visual-signals"
 
 interface Notification {
   id: string
@@ -95,8 +96,9 @@ export function NotificationPanel() {
   }
 
   return (
-    <Card className="border-border shadow-sm">
-      <CardHeader className="pb-4">
+    <VisualSignals hasUpdate={notifications.filter((n) => !n.read).length > 0}>
+      <Card className="border-border shadow-sm">
+        <CardHeader className="pb-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
@@ -180,6 +182,7 @@ export function NotificationPanel() {
         })}
       </CardContent>
     </Card>
+    </VisualSignals>
   )
 }
 

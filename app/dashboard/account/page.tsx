@@ -2,7 +2,7 @@
 
 import { useEffect } from "react"
 import { useRouter } from "next/navigation"
-import { AccountPage } from "@/components/account/account-page"
+import AccountPage from "@/components/account/account-page"
 import { isAuthenticated } from "@/lib/auth"
 
 export default function Account() {

@@ -4,6 +4,8 @@ import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
+import { useTiming } from "@/lib/hooks/useTiming"
+import { INTERVALS, TimingPriority } from "@/lib/timing-constants"
 import {
   BarChart3,
   TrendingUp,
@@ -41,19 +43,27 @@ export function AIPerformanceMonitor({ className }: AIPerformanceMonitorProps) {
   const [metrics, setMetrics] = useState<AutomationMetrics>(getMockMetrics())
   const [isExpanded, setIsExpanded] = useState(false)
 
-  // Simulate real-time updates
-  useEffect(() => {
-    const interval = setInterval(() => {
-      // Simulate minor fluctuations
-      setMetrics((prev) => ({
-        ...prev,
-        avgExecutionTime: Math.max(1.8, Math.min(3.0, prev.avgExecutionTime + (Math.random() - 0.5) * 0.2)),
-        successRate: Math.max(90, Math.min(98, prev.successRate + (Math.random() - 0.5) * 2)),
-      }))
-    }, 5000)
+  // Simulate real-time updates using centralized timing
+  const { interval } = useTiming()
 
-    return () => clearInterval(interval)
-  }, [])
+  useEffect(() => {
+    const taskId = interval(
+      () => {
+        // Simulate minor fluctuations
+        setMetrics((prev) => ({
+          ...prev,
+          avgExecutionTime: Math.max(1.8, Math.min(3.0, prev.avgExecutionTime + (Math.random() - 0.5) * 0.2)),
+          successRate: Math.max(90, Math.min(98, prev.successRate + (Math.random() - 0.5) * 2)),
+        }))
+      },
+      INTERVALS.AI_METRICS_REFRESH,
+      { priority: TimingPriority.MEDIUM }
+    )
+
+    return () => {
+      // Cleanup handled by useTiming hook
+    }
+  }, [interval])
 
   const getStatusColor = (value: number, threshold: { good: number; medium: number }) => {
     if (value >= threshold.good) return "text-green-600"

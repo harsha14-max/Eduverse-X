@@ -53,9 +53,14 @@ export function PortfolioSync() {
 
   const handleSyncNow = () => {
     setIsSyncing(true)
-    // Simulate sync
+    // Simulate sync with Section 6 Portfolio integration
     setTimeout(() => {
       setIsSyncing(false)
+      // In production, this would trigger portfolio update in Section 6
+      if (typeof window !== "undefined") {
+        const event = new CustomEvent("portfolioSync", { detail: { synced: true } })
+        window.dispatchEvent(event)
+      }
     }, 2000)
   }
 

@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
 import { DashboardHeader } from "../dashboard/dashboard-header"
-import { SidebarNavigation } from "../dashboard/sidebar-navigation"
+import SidebarNavigation from "../dashboard/sidebar-navigation"
 import { ProfileOverviewCard } from "./profile-overview-card"
 import { SkillGraph } from "./skill-graph"
 import { ProjectShowcase } from "./project-showcase"
@@ -12,9 +12,33 @@ import { ExperienceTimeline } from "./experience-timeline"
 import { SocialBrandingPanel } from "./social-branding-panel"
 import { GrowthInsightsPanel } from "./growth-insights-panel"
 import { PortfolioCustomization } from "./portfolio-customization"
+import { useInactivityDetection } from "@/lib/hooks/useInactivityDetection"
+import { THRESHOLDS } from "@/lib/timing-constants"
+import { toast } from "sonner"
+import { Clock } from "lucide-react"
 
-export function PortfolioPage() {
+export default function PortfolioPage() {
   const [mounted, setMounted] = useState(false)
+  const [showReminder, setShowReminder] = useState(false)
+
+  // Detect user inactivity after 10 minutes
+  const { isInactive, updateActivity } = useInactivityDetection({
+    threshold: THRESHOLDS.PORTFOLIO_INACTIVITY,
+    enabled: true,
+    onInactive: () => {
+      setShowReminder(true)
+      toast.info("Portfolio Reminder", {
+        description: "You've been inactive for a while. Consider updating your portfolio to showcase your latest achievements!",
+        duration: 6000,
+        icon: <Clock className="h-4 w-4" />,
+      })
+    },
+    onActive: () => {
+      if (showReminder) {
+        setShowReminder(false)
+      }
+    },
+  })
 
   useEffect(() => {
     setMounted(true)
